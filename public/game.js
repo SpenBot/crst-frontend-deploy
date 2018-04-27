@@ -2,10 +2,10 @@
 /////////// DEPENDENCIES AND APPLICATION STATES ////////////////////
 ////////////////////////////////////////////////////////////////////
 
-const url = 'http://localhost:4000/'
+const url = 'https://dashboard.heroku.com/apps/warm-sierra-75421'
 let serverPings = 10
 
-const socket = io.connect('http://localhost:4000')
+const socket = io.connect('https://dashboard.heroku.com/apps/warm-sierra-75421')
 let socketIsConfirmed = false
 
 let gameRun = null
