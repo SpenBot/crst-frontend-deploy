@@ -2,10 +2,10 @@
 /////////// DEPENDENCIES AND APPLICATION STATES ////////////////////
 ////////////////////////////////////////////////////////////////////
 
-const url = 'http://localhost:4000/'
+const url = 'https://gentle-peak-59883.herokuapp.com/'
 let serverPings = 10
 
-const socket = io.connect('http://localhost:4000/')
+const socket = io.connect('https://gentle-peak-59883.herokuapp.com/')
 let socketIsConfirmed = false
 
 let gameRun = null
