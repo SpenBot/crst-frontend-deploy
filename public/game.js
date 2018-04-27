@@ -2,10 +2,10 @@
 /////////// DEPENDENCIES AND APPLICATION STATES ////////////////////
 ////////////////////////////////////////////////////////////////////
 
-const url = 'https://dashboard.heroku.com/apps/warm-sierra-75421'
+const url = 'http://localhost:4000/'
 let serverPings = 10
 
-const socket = io.connect('https://dashboard.heroku.com/apps/warm-sierra-75421')
+const socket = io.connect('http://localhost:4000/')
 let socketIsConfirmed = false
 
 let gameRun = null
@@ -86,16 +86,15 @@ window.onload = function() {
 
 function wakeServer () {
 
-    // fetch(url)
-    //   .then(res => res.json())
-    //   .catch(err => console.log(err))
-    //   .then(data => {
-    //     // console.log(data)
-    //     serverPings -= 1
-    //     serverPings > 0 ? wakeServer() : confirmSocket()
-    //   })
+    fetch(url)
+      .then(res => res.json())
+      .catch(err => console.log(err))
+      .then(data => {
+        // console.log(data)
+        serverPings -= 1
+        serverPings > 0 ? wakeServer() : confirmSocket()
+      })
 
-    confirmSocket()
 
 }
 
