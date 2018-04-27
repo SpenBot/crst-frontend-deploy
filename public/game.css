@@ -1,0 +1,115 @@
+body {
+  font-family: 'Press Start 2P', sans-serif;
+  letter-spacing: 2px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: rgb(20, 20, 20);
+  color: white;
+}
+
+
+#gameCanvas {
+  margin: 30px auto 0;
+  border: solid 5px white;
+}
+
+
+
+
+/* LOADING SCREEN  */
+
+#loadingScreen {
+  width: 640px;
+  height: 360px;
+  margin: 30px auto 0;
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#loadingBarContainer {
+  margin-top: 10px;
+  height: 15px;
+  width: 400px;
+  border: solid 5px white;
+}
+
+#barFill {
+  background-color: white;
+  height: 15px;
+}
+
+
+/* PLAYER SELECT  */
+
+#playerSelectDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+#playerSelectButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.playerSelect {
+  width: 100px;
+  height: 40px;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.playerSelect:hover {
+  background-color: white;
+  cursor: pointer;
+}
+
+#playerSelectRed {
+  color: rgb(255, 50, 83);
+  border: solid 5px rgb(255, 50, 83);
+}
+
+#playerSelectBlue {
+  color: rgb(51, 180, 232);
+  border: solid 5px rgb(51, 180, 232);
+}
+
+/* PLAYER INFO */
+
+.plyrRed {
+  color: rgb(255, 50, 83);
+  border-color: rgb(255, 50, 83);
+}
+
+.plyrBlue {
+  color: rgb(51, 180, 232);
+  padding: 20px;
+  border-color: rgb(51, 180, 232);
+}
+
+h2 {
+  margin-top: 40px;
+
+
+  padding: 20px;
+  border: solid 5px white;
+}
+
+
+/* INSTRUCTIONS  */
+
+#instructions {
+  width: 640px;
+  margin-top: 10px;
+  font-size: 16px;
+  line-height: 22px;
+  text-align: center;
+}
