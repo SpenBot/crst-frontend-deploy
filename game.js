@@ -247,7 +247,7 @@ socket.on('playerChosen', function(data) {
       playerSelectDiv.style.display = "none"
 
       if (!thisPlayer) {
-        // playerInfo.style.color = "white"
+        playerInfo.setAttribute('class', 'plyrObs')
         playerInfo.innerHTML = "OBSERVER"
         body.prepend(playerInfo)
      }

@@ -91,8 +91,12 @@ body {
 
 .plyrBlue {
   color: rgb(51, 180, 232);
-  padding: 20px;
   border-color: rgb(51, 180, 232);
+}
+
+.plyrObs {
+  color: white;
+  border-color: white;
 }
 
 h2 {
