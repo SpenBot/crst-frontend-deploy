@@ -10,14 +10,32 @@ body {
   color: white;
 }
 
+#gameWindow {
+  display: flex;
+  flex-direction: row;
+}
 
 #gameCanvas {
-  margin: 30px auto 0;
+  margin: 20px auto 0;
   border: solid 5px white;
 }
 
+h5 {
+  margin: 120px 20px;
+  font-size: 36px;
+  text-decoration: underline;
+  width: 140px;
+  height: 60px;
+  text-align: center;
+}
 
+#redScore {
+  color: rgb(255, 50, 83);
+}
 
+#blueScore {
+  color: rgb(51, 180, 232);
+}
 
 /* LOADING SCREEN  */
 
@@ -100,8 +118,8 @@ body {
 }
 
 h2 {
-  margin-top: 40px;
-
+  margin-top: 20px;
+  margin-bottom: 5px;
 
   padding: 20px;
   border: solid 5px white;

@@ -2,10 +2,12 @@
 /////////// DEPENDENCIES AND APPLICATION STATES ////////////////////
 ////////////////////////////////////////////////////////////////////
 
-const url = 'https://gentle-peak-59883.herokuapp.com/'
+// const url = 'https://gentle-peak-59883.herokuapp.com/'
+const url = 'http://localhost:4000/'
 let serverPings = 10
 
-const socket = io.connect('https://gentle-peak-59883.herokuapp.com/')
+const socket = io.connect('http://localhost:4000/')
+// const socket = io.connect('https://gentle-peak-59883.herokuapp.com/')
 let socketIsConfirmed = false
 
 let gameRun = null
@@ -25,6 +27,9 @@ let loadingScreen = document.getElementById('loadingScreen')
 
 let playerInfo = document.createElement('h2')
 
+let redScoreDisplay = document.getElementById('redScore')
+let blueScoreDisplay = document.getElementById('blueScore')
+
 let playerSelectDiv = document.getElementById('playerSelectDiv')
 let redButton = document.getElementById('playerSelectRed')
 let blueButton = document.getElementById('playerSelectBlue')
@@ -33,10 +38,20 @@ let blueButton = document.getElementById('playerSelectBlue')
 /////////// GAME STATES ////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 
+const tileSize = 20
+const tileCountX = 32
+const tileCountY = 19
+
+let redScore = 0
+let blueScore = 0
+
 let redX
 let redY
 let blueX
 let blueY
+
+let appleX
+let appleY
 
 let thisPlayer = null
 
@@ -57,9 +72,8 @@ window.onload = function() {
     wakeServer()
 
 
-
-
     window.addEventListener("keyup", keyPush)
+
 
     redButton.addEventListener('click', () => {
         socket.emit('playerSelected', {
@@ -74,6 +88,10 @@ window.onload = function() {
         })
         playerSelectDiv.style.display = "none"
     })
+
+
+    redScoreDisplay.innerHTML = redScore
+    blueScoreDisplay.innerHTML = blueScore
 
 }
 
@@ -94,7 +112,6 @@ function wakeServer () {
         serverPings -= 1
         serverPings > 0 ? wakeServer() : confirmSocket()
       })
-
 
 }
 
@@ -212,6 +229,34 @@ socket.on('playerPositions', function(data) {
 
 
 
+/////////// LISTEN : UPDATE APPLE POSITION /////////////////////////
+////////////////////////////////////////////////////////////////////
+
+socket.on('applePosition', function(data) {
+
+    appleX = data.appleX
+    appleY = data.appleY
+
+    console.log('play sound')
+})
+
+
+
+/////////// LISTEN : SET SCORE /////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+socket.on('addScore', function(data) {
+
+    redScore = data.redScore
+    blueScore = data.blueScore
+
+    redScoreDisplay.innerHTML = redScore
+    blueScoreDisplay.innerHTML = blueScore
+
+})
+
+
+
 /////////// LISTEN : SET PLAYER ////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 
@@ -244,13 +289,16 @@ socket.on('playerSet', function(data) {
 socket.on('playerChosen', function(data) {
 
     if (data.playerRed && data.playerBlue) {
+
       playerSelectDiv.style.display = "none"
+
+      console.log("play music")
 
       if (!thisPlayer) {
         playerInfo.setAttribute('class', 'plyrObs')
         playerInfo.innerHTML = "OBSERVER"
         body.prepend(playerInfo)
-     }
+      }
 
     }
     else if (data.playerRed && !data.playerBlue) {
@@ -274,6 +322,8 @@ socket.on('playerReset', () => {
     playerSelectDiv.style.display = "block"
     redButton.style.display = "flex"
     blueButton.style.display = "flex"
+
+    console.log("stop music")
 })
 
 
@@ -299,16 +349,19 @@ function colorRect(leftX, topY, width, height, drawColor) {
 
 function drawEverything() {
 
-  /////////// draw background ///////////////////////////////
+  /////////// draw background //////////////////////////
   colorRect(0, 0, canvas.width, canvas.height, 'black')
 
-  /////////// draw red player //////////////////////////////
-  colorRect(redX, redY, 20, 20, 'rgb(255,50,83)')
+  /////////// draw apple ///////////////////////////////
+  if (appleX && appleY) {
+    colorRect(appleX * tileSize, appleY * tileSize, tileSize, tileSize, 'white')
+  }
 
-  /////////// draw blue player //////////////////////////////
-  colorRect(blueX, blueY, 20, 20, 'rgb(51,180,232)')
+  /////////// draw red player //////////////////////////
+  colorRect(redX * tileSize, redY * tileSize, tileSize, tileSize, 'rgb(255,50,83)')
 
-  colorRect((canvas.width / 2) - 5, (canvas.height / 2) - 5, 10, 10, 'white')
+  /////////// draw blue player /////////////////////////
+  colorRect(blueX * tileSize, blueY * tileSize, tileSize, tileSize, 'rgb(51,180,232)')
 
 }
 
