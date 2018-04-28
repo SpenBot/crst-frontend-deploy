@@ -34,6 +34,7 @@ let playerSelectDiv = document.getElementById('playerSelectDiv')
 let redButton = document.getElementById('playerSelectRed')
 let blueButton = document.getElementById('playerSelectBlue')
 
+let playMusic = document.getElementById('music')
 
 /////////// GAME STATES ////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
@@ -57,6 +58,7 @@ let thisPlayer = null
 
 const fps = 30
 
+let musicIsPlaying = false
 
 
 
@@ -237,7 +239,15 @@ socket.on('applePosition', function(data) {
     appleX = data.appleX
     appleY = data.appleY
 
-    console.log('play sound')
+    // document.getElementById('apple').play()
+})
+
+
+/////////// LISTEN : PLAYER COLLIDE /////////////////////////
+////////////////////////////////////////////////////////////////////
+
+socket.on('playerCollision', function() {
+  document.getElementById('plysCol').play()
 })
 
 
@@ -252,6 +262,8 @@ socket.on('addScore', function(data) {
 
     redScoreDisplay.innerHTML = redScore
     blueScoreDisplay.innerHTML = blueScore
+
+    document.getElementById('apple').play()
 
 })
 
@@ -292,7 +304,10 @@ socket.on('playerChosen', function(data) {
 
       playerSelectDiv.style.display = "none"
 
-      console.log("play music")
+      if (!musicIsPlaying) {
+        musicIsPlaying = true
+        playMusic.play()
+      }
 
       if (!thisPlayer) {
         playerInfo.setAttribute('class', 'plyrObs')
@@ -307,6 +322,17 @@ socket.on('playerChosen', function(data) {
     else if (data.playerBlue && !data.playerRed) {
       blueButton.style.display = "none"
     }
+    else if (!data.playerBlue && !data.playerRed) {
+      playerSelectDiv.style.display = "block"
+      redButton.style.display = "flex"
+      blueButton.style.display = "flex"
+
+      if (musicIsPlaying) {
+        musicIsPlaying = false
+        playMusic.pause()
+        playMusic.currentTime = 0
+      }
+    }
 
 })
 
@@ -319,11 +345,15 @@ socket.on('playerChosen', function(data) {
 socket.on('playerReset', () => {
     thisPlayer = null
     body.removeChild(playerInfo)
-    playerSelectDiv.style.display = "block"
-    redButton.style.display = "flex"
-    blueButton.style.display = "flex"
+    // playerSelectDiv.style.display = "block"
+    // redButton.style.display = "flex"
+    // blueButton.style.display = "flex"
 
-    console.log("stop music")
+    if (musicIsPlaying) {
+      musicIsPlaying = false
+      playMusic.pause()
+      playMusic.currentTime = 0
+    }
 })
 
 
